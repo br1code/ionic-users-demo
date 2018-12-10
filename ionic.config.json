@@ -1,0 +1,7 @@
+{
+  "name": "connect-api-demo",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}
