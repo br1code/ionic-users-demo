@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, LoadingController } from 'ionic-angular';
+import { UserServiceProvider } from '../../providers/user-service/user-service';
 
 @Component({
   selector: 'page-home',
@@ -7,8 +8,31 @@ import { NavController } from 'ionic-angular';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  users: any[] = [];
+  message: string = 'Update Userssssss';
 
+  constructor(public navCtrl: NavController,
+              public userService: UserServiceProvider,
+              public loadingCtrl: LoadingController) {
   }
 
+  getUsers() {
+    let loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    loading.present();
+
+    this.userService.getUsers()
+    .subscribe(
+      (data) => {
+        this.users = data['results'];
+        loading.dismiss();
+      },
+      (error) => {
+        console.log(error);
+        loading.dismiss();
+      }
+    );
+  }
 }
